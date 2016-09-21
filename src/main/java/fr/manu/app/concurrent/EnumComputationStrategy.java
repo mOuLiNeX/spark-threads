@@ -59,7 +59,7 @@ public enum EnumComputationStrategy {
             }
         }
     },
-    GLOBAL_POOL__WITH_FALLBACK_ON_WAITING_QUEUE_SIZE {
+    GLOBAL_POOL_WITH_FALLBACK_ON_WAITING_QUEUE_SIZE {
         @Override
         public void process(IntStream sequence, Runnable action) {
             if (workerPool.getWaitingCount() > workerPoolMaxWait) {
