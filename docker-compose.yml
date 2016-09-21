@@ -1,0 +1,29 @@
+version: '2'
+services:
+  db:
+    build: ./postgres
+    environment:
+        - DB_NAME=mydb
+    expose:
+      - "5432"
+    networks:
+      my_network:
+        aliases:
+          - mydb
+  httpServer:
+    image: maven:3-alpine
+    command: mvn exec:java
+    volumes:
+        - .:/opt/app
+    working_dir: /opt/app
+    environment:
+        - APP_STRATEGY=GLOBAL_POOL
+    ports:
+      - "4567:4567"
+    networks:
+      - my_network
+
+networks:
+   my_network:
+
+
