@@ -38,7 +38,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/SQL/wait</stringProp>
+          <stringProp name="HTTPSampler.path">/SQL/wait/4/2</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -187,12 +187,18 @@
           <stringProp name="exclude_sample_labels"></stringProp>
           <collectionProp name="COMPOSITE_CFG">
             <collectionProp name="">
-              <stringProp name="245914917">jp@gc - Active Threads Over Time</stringProp>
               <stringProp name="-243013315">jp@gc - Response Times Over Time</stringProp>
+              <stringProp name="245914917">jp@gc - Active Threads Over Time</stringProp>
+              <stringProp name="-1189639862">jp@gc - JMXMon Samples Collector</stringProp>
+              <stringProp name="-1189639862">jp@gc - JMXMon Samples Collector</stringProp>
+              <stringProp name="-1189639862">jp@gc - JMXMon Samples Collector</stringProp>
             </collectionProp>
             <collectionProp name="">
+              <stringProp name="-445012941">Ma requete</stringProp>
               <stringProp name="2133254370">Overall Active Threads</stringProp>
-              <stringProp name="-1549391110">Overall Response Times</stringProp>
+              <stringProp name="2097725480">WorkerQueueWait</stringProp>
+              <stringProp name="-1146068405">WorkerQueueLastWaitTime</stringProp>
+              <stringProp name="2097614516">WorkerQueueSize</stringProp>
             </collectionProp>
           </collectionProp>
           <stringProp name="start_offset"></stringProp>
@@ -468,6 +474,83 @@
           <boolProp name="include_checkbox_state">false</boolProp>
           <boolProp name="exclude_checkbox_state">false</boolProp>
         </kg.apc.jmeter.vizualizers.CorrectedResultCollector>
+        <hashTree/>
+        <kg.apc.jmeter.jmxmon.JMXMonCollector guiclass="kg.apc.jmeter.vizualizers.JMXMonGui" testclass="kg.apc.jmeter.jmxmon.JMXMonCollector" testname="jp@gc - JMXMon Samples Collector" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+          <longProp name="interval_grouping">1000</longProp>
+          <boolProp name="graph_aggregated">false</boolProp>
+          <stringProp name="include_sample_labels"></stringProp>
+          <stringProp name="exclude_sample_labels"></stringProp>
+          <stringProp name="start_offset"></stringProp>
+          <stringProp name="end_offset"></stringProp>
+          <boolProp name="include_checkbox_state">false</boolProp>
+          <boolProp name="exclude_checkbox_state">false</boolProp>
+          <collectionProp name="samplers">
+            <collectionProp name="-1461095253">
+              <stringProp name="2097614516">WorkerQueueSize</stringProp>
+              <stringProp name="638753618">service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-109175024">fr.manu.spatk-threads:type=MonitoringThreadPoolExecutor</stringProp>
+              <stringProp name="590544265">ActiveCount</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="1237">false</stringProp>
+              <stringProp name="1237">false</stringProp>
+            </collectionProp>
+            <collectionProp name="1064086769">
+              <stringProp name="2097725480">WorkerQueueWait</stringProp>
+              <stringProp name="638753618">service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-109175024">fr.manu.spatk-threads:type=MonitoringThreadPoolExecutor</stringProp>
+              <stringProp name="1931020002">WaitingCount</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="1237">false</stringProp>
+              <stringProp name="1237">false</stringProp>
+            </collectionProp>
+            <collectionProp name="1414044760">
+              <stringProp name="-1146068405">WorkerQueueLastWaitTime</stringProp>
+              <stringProp name="638753618">service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="-109175024">fr.manu.spatk-threads:type=MonitoringThreadPoolExecutor</stringProp>
+              <stringProp name="1663361572">LastWaitingTime</stringProp>
+              <stringProp name="0"></stringProp>
+              <stringProp name="1237">false</stringProp>
+              <stringProp name="1237">false</stringProp>
+            </collectionProp>
+          </collectionProp>
+        </kg.apc.jmeter.jmxmon.JMXMonCollector>
         <hashTree/>
       </hashTree>
     </hashTree>

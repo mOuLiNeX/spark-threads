@@ -16,21 +16,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // Inspired by http://www.nurkiewicz.com/2014/11/executorservice-10-tips-and-tricks.html
-public class WaitTimeMonitoringExecutorService implements ExecutorService {
+public class MonitoringThreadPoolExecutor implements ExecutorService, MonitoringThreadPoolExecutorMXBean {
 
     private final ThreadPoolExecutor delegate;
-    private static final Logger LOGGER = LoggerFactory.getLogger(WaitTimeMonitoringExecutorService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MonitoringThreadPoolExecutor.class);
+    private long lastWaitingTime;
 
-    public WaitTimeMonitoringExecutorService(ThreadPoolExecutor delegate) {
+    public MonitoringThreadPoolExecutor(ThreadPoolExecutor delegate) {
         this.delegate = delegate;
+        this.lastWaitingTime = 0;
     }
 
     @Override
     public <T> Future<T> submit(Callable<T> task) {
         final Instant startTime = Instant.now();
         return getDelegate().submit(() -> {
-            final long queueDuration = Duration.between(startTime, Instant.now()).toMillis();
-            LOGGER.info("Task {} spent {}ms in queue", task, queueDuration);
+            lastWaitingTime = Duration.between(startTime, Instant.now()).toMillis();
+            LOGGER.info("Task {} spent {}ms in queue", task, lastWaitingTime);
             return task.call();
         });
     }
@@ -101,8 +103,8 @@ public class WaitTimeMonitoringExecutorService implements ExecutorService {
     public void execute(Runnable command) {
         final Instant startTime = Instant.now();
         getDelegate().execute(() -> {
-            final long queueDuration = Duration.between(startTime, Instant.now()).toMillis();
-            LOGGER.info("Command {} spent {}ms in queue", command, queueDuration);
+            lastWaitingTime = Duration.between(startTime, Instant.now()).toMillis();
+            LOGGER.info("Command {} spent {}ms in queue", command, lastWaitingTime);
             command.run();
         });
     }
@@ -117,5 +119,15 @@ public class WaitTimeMonitoringExecutorService implements ExecutorService {
 
     public ThreadPoolExecutor getDelegate() {
         return delegate;
+    }
+
+    @Override
+    public int getActiveCount() {
+        return getDelegate().getActiveCount();
+    }
+
+    @Override
+    public long getLastWaitingTime() {
+        return lastWaitingTime;
     }
 }

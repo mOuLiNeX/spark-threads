@@ -12,7 +12,7 @@ La gestion de conf applicative et serveur se fait par des variables d'environeme
 
 Dans le § environment du service httpServer, on peut définir les var d'env suivantes :
 - HTTP_POOL_CAPACITY : pour le pool de traitement des requêtes HTTP
-- SQL_POOL_CAPACITY : pour le pool JDBC (basé sur c3p0) vers PostgreSQL
+- SQL_POOL_CAPACITY : pour le pool JDBC (basé sur c3p0) vers PostgreSQL, 20 par défaut
 - WORKER_POOL_CAPACITY : utilisé si APP_STRATEGY=*GLOBAL_POOL*, *GLOBAL_POOL_WITH_FALLBACK_ON_POOL_FULL* ou *GLOBAL_POOL_WITH_FALLBACK_ON_WAITING_QUEUE_SIZE* (cf plus bas)
 - WORKER_POOL_MAX_WAIT : utilisé si APP_STRATEGY=*GLOBAL_POOL_WITH_FALLBACK_ON_WAITING_QUEUE_SIZE* (cf plus bas)
 - APP_STRATEGY : pour choisir la stratégie de traitement d'une requête :

@@ -32,9 +32,7 @@ public class MyServer {
 
     public static void main(String[] args) {
         RouteOverview.enableRouteOverview();
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            Spark.stop();
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> Spark.stop()));
         if (httpPoolCapacity != -1) {
             Spark.threadPool(httpPoolCapacity);
             LOGGER.info("Positionning Spark HTTP pool with {} threads", httpPoolCapacity);

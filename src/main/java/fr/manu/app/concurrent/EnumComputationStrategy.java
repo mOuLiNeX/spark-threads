@@ -1,10 +1,13 @@
 package fr.manu.app.concurrent;
 
+import java.lang.management.ManagementFactory;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.IntStream;
+
+import javax.management.ObjectName;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,8 +76,8 @@ public enum EnumComputationStrategy {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnumComputationStrategy.class);
 
-    private static final WaitTimeMonitoringExecutorService createThreadsPool(int capacity) {
-        return new WaitTimeMonitoringExecutorService((ThreadPoolExecutor) Executors.newFixedThreadPool(capacity));
+    private static final MonitoringThreadPoolExecutor createThreadsPool(int capacity) {
+        return new MonitoringThreadPoolExecutor((ThreadPoolExecutor) Executors.newFixedThreadPool(capacity));
     }
 
     private static void process(IntStream sequence, Runnable action, ExecutorService executor) {
@@ -87,7 +90,7 @@ public enum EnumComputationStrategy {
 
     static int workerPoolCapacity = 8;
     static int workerPoolMaxWait = 8;
-    static WaitTimeMonitoringExecutorService workerPool;
+    static MonitoringThreadPoolExecutor workerPool;
 
     static {
         try {
@@ -102,6 +105,19 @@ public enum EnumComputationStrategy {
         }
         workerPool = createThreadsPool(workerPoolCapacity);
         LOGGER.info("Create global pool with {} threads", workerPoolCapacity);
+
+        try {
+            ManagementFactory.getPlatformMBeanServer().registerMBean(workerPool,
+                new ObjectName("fr.manu.spatk-threads:type=MonitoringThreadPoolExecutor"));
+        } catch (Exception e) {
+            LOGGER.error("Cannot register MBean to monitor thread pool", e);
+        }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> close()));
+    }
+
+    private static final void close() {
+        workerPool.shutdownNow();
     }
 
     public abstract void process(IntStream sequence, Runnable action);
