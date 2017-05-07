@@ -1,19 +1,13 @@
 package fr.manu.app.concurrent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.concurrent.*;
 
 // Inspired by http://www.nurkiewicz.com/2014/11/executorservice-10-tips-and-tricks.html
 public class MonitoringThreadPoolExecutor implements ExecutorService, MonitoringThreadPoolExecutorMXBean {

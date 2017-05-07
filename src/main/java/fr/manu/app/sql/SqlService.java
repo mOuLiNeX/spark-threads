@@ -1,17 +1,15 @@
 package fr.manu.app.sql;
 
-import java.beans.PropertyVetoException;
-import java.sql.SQLException;
-import java.util.stream.IntStream;
-
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.DataSources;
+import fr.manu.app.concurrent.EnumComputationStrategy;
 import org.skife.jdbi.v2.DBI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mchange.v2.c3p0.DataSources;
-
-import fr.manu.app.concurrent.EnumComputationStrategy;
+import java.beans.PropertyVetoException;
+import java.sql.SQLException;
+import java.util.stream.IntStream;
 
 public class SqlService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SqlService.class);

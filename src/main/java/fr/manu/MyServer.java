@@ -1,15 +1,13 @@
 package fr.manu;
 
-import static spark.Spark.exception;
-import static spark.Spark.get;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import fr.manu.app.concurrent.EnumComputationStrategy;
 import fr.manu.app.sql.SqlService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Spark;
-import spark.route.RouteOverview;
+
+import static spark.Spark.exception;
+import static spark.Spark.get;
 
 public class MyServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyServer.class);
@@ -31,7 +29,6 @@ public class MyServer {
     }
 
     public static void main(String[] args) {
-        RouteOverview.enableRouteOverview();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> Spark.stop()));
         if (httpPoolCapacity != -1) {
             Spark.threadPool(httpPoolCapacity);

@@ -1,16 +1,15 @@
 package fr.manu.app.concurrent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.IntStream;
-
-import javax.management.ObjectName;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public enum EnumComputationStrategy {
     SEQUENTIAL {
@@ -80,7 +79,7 @@ public enum EnumComputationStrategy {
         return new MonitoringThreadPoolExecutor((ThreadPoolExecutor) Executors.newFixedThreadPool(capacity));
     }
 
-    private static void process(IntStream sequence, Runnable action, ExecutorService executor) {
+    static void process(IntStream sequence, Runnable action, ExecutorService executor) {
         CompletableFuture.allOf(
             sequence
                 .mapToObj(i -> CompletableFuture.runAsync(action, executor))
